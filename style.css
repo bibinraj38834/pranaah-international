@@ -366,7 +366,7 @@ input, textarea, select { font-family: inherit; }
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 8rem 2rem 6rem;
+  padding: 5rem 2rem 5rem;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -375,7 +375,7 @@ input, textarea, select { font-family: inherit; }
   height: 180px;
   width: auto;
   object-fit: contain;
-  margin: 0 auto 2rem auto;
+  margin: -15px auto -25px auto;
   display: block;
 }
 
