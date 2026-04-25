@@ -186,7 +186,7 @@ input, textarea, select { font-family: inherit; }
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 2rem;
-  height: 76px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -203,15 +203,16 @@ input, textarea, select { font-family: inherit; }
 }
 
 .logo-img {
-  height: 65px;
+  height: 80px;
   width: auto;
   object-fit: contain;
 }
 
 .logo-name-img {
-  height: 35px;
+  height: 48px;
   width: auto;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 /* Desktop Nav Links */
@@ -368,6 +369,14 @@ input, textarea, select { font-family: inherit; }
   padding: 8rem 2rem 6rem;
   max-width: 900px;
   margin: 0 auto;
+}
+
+.hero-center-logo {
+  height: 180px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto 2rem auto;
+  display: block;
 }
 
 .hero-badge {
@@ -1599,7 +1608,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .footer-logo-img {
-  height: 80px;
+  height: 95px;
   width: auto;
   object-fit: contain;
 }

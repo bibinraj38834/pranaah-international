@@ -192,20 +192,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var STORAGE_KEY = 'pranaah_testimonials';
 
-  function getCustomTestimonials() {
+  function getAllTestimonials() {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === null) {
+      // First visit initialization
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_TESTIMONIALS));
+      return DEFAULT_TESTIMONIALS;
+    }
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return JSON.parse(stored) || [];
     } catch (e) {
       return [];
     }
   }
 
-  function saveCustomTestimonials(arr) {
+  function saveTestimonials(arr) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-  }
-
-  function getAllTestimonials() {
-    return DEFAULT_TESTIMONIALS.concat(getCustomTestimonials());
   }
 
   function starsHtml(n) {
@@ -793,25 +795,20 @@ document.addEventListener('DOMContentLoaded', function () {
         '</div>' +
         '<div class="admin-test-actions">' +
           '<span class="admin-test-badge ' + badgeClass + '">' + badgeLabel + '</span>' +
-          (t.isDefault
-            ? '<button class="admin-delete-btn" disabled title="Default testimonials are protected">Protected</button>'
-            : '<button class="admin-delete-btn" data-id="' + t.id + '">Delete</button>'
-          ) +
+          '<button class="admin-delete-btn" data-id="' + t.id + '">Delete</button>' +
         '</div>';
 
-      if (!t.isDefault) {
-        var deleteBtn = item.querySelector('.admin-delete-btn');
-        (function (tid, tname) {
-          deleteBtn.addEventListener('click', function () {
-            if (confirm('Remove this testimonial by ' + tname + '?')) {
-              var custom = getCustomTestimonials().filter(function (c) { return c.id !== tid; });
-              saveCustomTestimonials(custom);
-              buildCarousel();
-              renderAdminList();
-            }
-          });
-        })(t.id, t.name);
-      }
+      var deleteBtn = item.querySelector('.admin-delete-btn');
+      (function (tid, tname) {
+        deleteBtn.addEventListener('click', function () {
+          if (confirm('Remove this testimonial by ' + tname + '?')) {
+            var updated = getAllTestimonials().filter(function (c) { return c.id !== tid; });
+            saveTestimonials(updated);
+            buildCarousel();
+            renderAdminList();
+          }
+        });
+      })(t.id, t.name);
 
       adminTestList.appendChild(item);
     });
@@ -848,9 +845,9 @@ document.addEventListener('DOMContentLoaded', function () {
         isDefault: false
       };
 
-      var custom = getCustomTestimonials();
-      custom.push(newEntry);
-      saveCustomTestimonials(custom);
+      var updated = getAllTestimonials();
+      updated.push(newEntry);
+      saveTestimonials(updated);
 
       buildCarousel();
       clearAddForm();
