@@ -515,6 +515,16 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.style.opacity = '0.7';
 
         setTimeout(function () {
+          // Trigger the user's email client with pre-filled form data
+          var subjectText = encodeURIComponent('Pranaah Inquiry: ' + subjectVal);
+          var bodyText = encodeURIComponent(
+            'Name: ' + nameVal + '\n' +
+            'Role: ' + typeVal + '\n' +
+            'Email: ' + emailVal + '\n\n' +
+            'Message:\n' + messageVal
+          );
+          window.location.href = 'mailto:contact@pranaahinternational.com?subject=' + subjectText + '&body=' + bodyText;
+
           contactForm.reset();
           formSuccess.classList.add('visible');
           submitText.textContent = originalText;
